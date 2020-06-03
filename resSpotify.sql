@@ -253,6 +253,7 @@ CREATE TABLE `Cuenta` (
 
 LOCK TABLES `Cuenta` WRITE;
 /*!40000 ALTER TABLE `Cuenta` DISABLE KEYS */;
+INSERT INTO `Cuenta` VALUES (1,'Gratis'),(2,'Premium Individual'),(3,'Premium Universitario'),(4,'Premium Duo'),(5,'Premium Familiar');
 /*!40000 ALTER TABLE `Cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -479,4 +480,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-02 18:55:41
+-- Dump completed on 2020-06-03  5:18:17
