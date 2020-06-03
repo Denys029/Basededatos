@@ -37,6 +37,7 @@ CREATE TABLE `Albumes` (
 
 LOCK TABLES `Albumes` WRITE;
 /*!40000 ALTER TABLE `Albumes` DISABLE KEYS */;
+INSERT INTO `Albumes` VALUES (1,'Aire','2010-12-21','02:15:30'),(2,'Hasta Ahora','2009-08-19','01:30:10'),(3,'Tanto Amor','2013-04-07','03:15:08'),(4,'Un Año','2020-09-21','02:08:45'),(5,'Primer Avion','2019-06-20','01:50:23');
 /*!40000 ALTER TABLE `Albumes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +51,7 @@ DROP TABLE IF EXISTS `Artista`;
 CREATE TABLE `Artista` (
   `IdArtista` int(11) NOT NULL,
   `Nombre` varchar(50) NOT NULL,
-  `CorreoElectronio¿co` varchar(30) NOT NULL,
+  `CorreoElectronico` varchar(30) NOT NULL,
   `FechaCreacion` date NOT NULL,
   `Biografia` text DEFAULT NULL,
   `IdAlbumes` int(11) NOT NULL,
@@ -66,6 +67,7 @@ CREATE TABLE `Artista` (
 
 LOCK TABLES `Artista` WRITE;
 /*!40000 ALTER TABLE `Artista` DISABLE KEYS */;
+INSERT INTO `Artista` VALUES (1,'Ricardo Arjona','ric.arj@gmail.net','2021-04-22','Born in Antigua, Arjona was interested in music from an early age but initially.',3),(2,'Carlos','neque.vitae@sociosquad.com','2021-04-01','Emerging in 2013 with the hit single The Way, Grande',1),(3,'Sebastian','nisl.Nulla.eu@Nam.ca','2020-11-29','blandit enim consequat purus. Maecenas libero',4),(4,'Maria','maria56526@gmail.com','2020-01-12','Radicada en Medellín desde 1996, donde inicia su carrera artística, empezó a componer canciones desde muy niña',2),(5,'Ana','ana0626@gmail.com','2020-12-31','Reconocido y talentoso músico ecuatoriano, lanza su primera producción discográfica',1);
 /*!40000 ALTER TABLE `Artista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +272,9 @@ CREATE TABLE `FormaPago` (
   `IdTarjeta` int(11) NOT NULL,
   PRIMARY KEY (`IdPago`),
   KEY `IdTarjeta` (`IdTarjeta`),
-  CONSTRAINT `FormaPago_ibfk_1` FOREIGN KEY (`IdTarjeta`) REFERENCES `Tarjeta` (`IdTarjeta`)
+  KEY `IdUsuario` (`IdUsuario`),
+  CONSTRAINT `FormaPago_ibfk_1` FOREIGN KEY (`IdTarjeta`) REFERENCES `Tarjeta` (`IdTarjeta`),
+  CONSTRAINT `FormaPago_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -292,7 +296,7 @@ DROP TABLE IF EXISTS `Genero`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Genero` (
   `IdGenero` int(11) NOT NULL,
-  `NombreGenero` int(11) NOT NULL,
+  `NombreGenero` varchar(50) NOT NULL,
   PRIMARY KEY (`IdGenero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -303,6 +307,7 @@ CREATE TABLE `Genero` (
 
 LOCK TABLES `Genero` WRITE;
 /*!40000 ALTER TABLE `Genero` DISABLE KEYS */;
+INSERT INTO `Genero` VALUES (1,'Pop'),(2,'Afro'),(3,'Cristiana'),(4,'Clasica'),(5,'Rock'),(6,'K-pop'),(7,'Romantica'),(8,'Latina'),(9,'Reggae'),(10,'Cumbia');
 /*!40000 ALTER TABLE `Genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,9 +427,9 @@ DROP TABLE IF EXISTS `Tarjeta`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tarjeta` (
   `IdTarjeta` int(11) NOT NULL,
-  `Numero` tinyint(4) NOT NULL,
+  `Numero` bigint(20) NOT NULL,
   `FechaExpiracion` date NOT NULL,
-  `Cvc` tinyint(4) NOT NULL,
+  `Cvc` smallint(6) NOT NULL,
   PRIMARY KEY (`IdTarjeta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -435,6 +440,7 @@ CREATE TABLE `Tarjeta` (
 
 LOCK TABLES `Tarjeta` WRITE;
 /*!40000 ALTER TABLE `Tarjeta` DISABLE KEYS */;
+INSERT INTO `Tarjeta` VALUES (1,4871682561513072,'2021-10-21',914),(2,4594747952419540,'2023-06-22',308),(3,2304237988443276,'2022-02-23',672);
 /*!40000 ALTER TABLE `Tarjeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,4 +486,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-03  5:18:17
+-- Dump completed on 2020-06-03  8:25:24
