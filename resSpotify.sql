@@ -54,10 +54,7 @@ CREATE TABLE `Artista` (
   `CorreoElectronico` varchar(30) NOT NULL,
   `FechaCreacion` date NOT NULL,
   `Biografia` text DEFAULT NULL,
-  `IdAlbumes` int(11) NOT NULL,
-  PRIMARY KEY (`IdArtista`),
-  KEY `IdAlbumes` (`IdAlbumes`),
-  CONSTRAINT `Artista_ibfk_1` FOREIGN KEY (`IdAlbumes`) REFERENCES `Albumes` (`IdAlbumes`)
+  PRIMARY KEY (`IdArtista`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -67,7 +64,7 @@ CREATE TABLE `Artista` (
 
 LOCK TABLES `Artista` WRITE;
 /*!40000 ALTER TABLE `Artista` DISABLE KEYS */;
-INSERT INTO `Artista` VALUES (1,'Ricardo Arjona','ric.arj@gmail.net','2021-04-22','Born in Antigua, Arjona was interested in music from an early age but initially.',3),(2,'Carlos','neque.vitae@sociosquad.com','2021-04-01','Emerging in 2013 with the hit single The Way, Grande',1),(3,'Sebastian','nisl.Nulla.eu@Nam.ca','2020-11-29','blandit enim consequat purus. Maecenas libero',4),(4,'Maria','maria56526@gmail.com','2020-01-12','Radicada en Medellín desde 1996, donde inicia su carrera artística, empezó a componer canciones desde muy niña',2),(5,'Ana','ana0626@gmail.com','2020-12-31','Reconocido y talentoso músico ecuatoriano, lanza su primera producción discográfica',1);
+INSERT INTO `Artista` VALUES (1,'Ricardo Arjona','ric.arj@gmail.com','2021-04-22','Born in Antigua, Arjona was interested in music from an early age but initially.'),(2,'Carlos','Crls@hotmail.com','2021-04-01','Emerging in 2013 with the hit single The Way, Grande'),(3,'Sebastian','seb056632@pucece.edu.ec','2020-11-29','blandit enim consequat purus. Maecenas libero'),(4,'Maria','maria56526@gmail.com','2020-01-12','Radicada en Medellín desde 1996, donde inicia su carrera artística, empezó a componer canciones desde muy niña'),(5,'Ana','ana0626@gmail.com','2020-12-31','Reconocido y talentoso músico ecuatoriano, lanza su primera producción discográfica');
 /*!40000 ALTER TABLE `Artista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +100,7 @@ CREATE TABLE `Canciones` (
 
 LOCK TABLES `Canciones` WRITE;
 /*!40000 ALTER TABLE `Canciones` DISABLE KEYS */;
+INSERT INTO `Canciones` VALUES (1,'Un año','2018-12-28','00:03:17','vel sapien imperdiet ornare. In',3,1,5),(2,'Consejo de amor','2017-12-19','00:02:50','consectetuer mauris id sapien. Cras',5,3,2),(3,'Perdoname','2018-08-30','00:04:10','turpis. In condimentum. Donec at',1,1,1),(4,'Saturno','2010-05-26','00:03:32','pulvinar arcu et pede. Nunc',4,5,5),(5,'Solamente tu','2014-02-03','00:05:23','Quisque fringilla euismod enim. Etiam',3,5,5);
 /*!40000 ALTER TABLE `Canciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,6 +137,7 @@ CREATE TABLE `CancionesEscuchadas` (
 
 LOCK TABLES `CancionesEscuchadas` WRITE;
 /*!40000 ALTER TABLE `CancionesEscuchadas` DISABLE KEYS */;
+INSERT INTO `CancionesEscuchadas` VALUES (1,'Felix',4,2,3,1),(2,'David',3,9,5,2),(3,'Reed',4,8,4,3),(4,'Kelsey',2,1,5,5),(5,'Beau',1,5,4,4);
 /*!40000 ALTER TABLE `CancionesEscuchadas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,17 +155,18 @@ CREATE TABLE `CancionesMasEscuchadas` (
   `IdArtista` int(11) NOT NULL,
   `IdGenero` int(11) NOT NULL,
   `IdAlbumes` int(11) NOT NULL,
+  `IdCancionesEscuchadas` int(11) NOT NULL,
   `IdUsuario` int(11) NOT NULL,
   PRIMARY KEY (`IdCancionesMasEscuchadas`),
   KEY `IdArtista` (`IdArtista`),
   KEY `IdGenero` (`IdGenero`),
   KEY `IdAlbumes` (`IdAlbumes`),
-  KEY `CantidadVecesEscuchado` (`CantidadVecesEscuchado`),
+  KEY `IdCancionesEscuchadas` (`IdCancionesEscuchadas`),
   KEY `IdUsuario` (`IdUsuario`),
   CONSTRAINT `CancionesMasEscuchadas_ibfk_1` FOREIGN KEY (`IdArtista`) REFERENCES `Artista` (`IdArtista`),
   CONSTRAINT `CancionesMasEscuchadas_ibfk_2` FOREIGN KEY (`IdGenero`) REFERENCES `Genero` (`IdGenero`),
   CONSTRAINT `CancionesMasEscuchadas_ibfk_3` FOREIGN KEY (`IdAlbumes`) REFERENCES `Albumes` (`IdAlbumes`),
-  CONSTRAINT `CancionesMasEscuchadas_ibfk_4` FOREIGN KEY (`CantidadVecesEscuchado`) REFERENCES `CancionesEscuchadas` (`IdCancionesEscuchadas`),
+  CONSTRAINT `CancionesMasEscuchadas_ibfk_4` FOREIGN KEY (`IdCancionesEscuchadas`) REFERENCES `CancionesEscuchadas` (`IdCancionesEscuchadas`),
   CONSTRAINT `CancionesMasEscuchadas_ibfk_5` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -177,6 +177,7 @@ CREATE TABLE `CancionesMasEscuchadas` (
 
 LOCK TABLES `CancionesMasEscuchadas` WRITE;
 /*!40000 ALTER TABLE `CancionesMasEscuchadas` DISABLE KEYS */;
+INSERT INTO `CancionesMasEscuchadas` VALUES (1,'Emerald',85,4,6,5,2,2),(2,'Imelda',81,5,7,3,5,5),(3,'Blair',76,5,3,1,4,3),(4,'Felix',89,3,3,5,1,4),(5,'Hamish',63,3,5,4,1,2);
 /*!40000 ALTER TABLE `CancionesMasEscuchadas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,6 +207,7 @@ CREATE TABLE `CancionesSugeridas` (
 
 LOCK TABLES `CancionesSugeridas` WRITE;
 /*!40000 ALTER TABLE `CancionesSugeridas` DISABLE KEYS */;
+INSERT INTO `CancionesSugeridas` VALUES (1,5,5),(2,3,3),(3,1,1),(4,4,2),(5,3,4);
 /*!40000 ALTER TABLE `CancionesSugeridas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +220,7 @@ DROP TABLE IF EXISTS `Clave`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Clave` (
   `IdClave` int(11) NOT NULL,
-  `ClaveEncriptada` int(11) NOT NULL,
+  `ClaveEncriptada` varchar(50) NOT NULL,
   `IdUsuario` int(11) NOT NULL,
   PRIMARY KEY (`IdClave`),
   KEY `IdUsuario` (`IdUsuario`),
@@ -232,6 +234,7 @@ CREATE TABLE `Clave` (
 
 LOCK TABLES `Clave` WRITE;
 /*!40000 ALTER TABLE `Clave` DISABLE KEYS */;
+INSERT INTO `Clave` VALUES (1,'KNP24LXC1ZB',2),(2,'KAL42NUA9UX',1),(3,'AMR79WBG8QH',4),(4,'NYL14GHG6RM',5),(5,'TEZ92KJJ7XG',3);
 /*!40000 ALTER TABLE `Clave` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,11 +272,9 @@ DROP TABLE IF EXISTS `FormaPago`;
 CREATE TABLE `FormaPago` (
   `IdPago` int(11) NOT NULL,
   `IdUsuario` int(11) NOT NULL,
-  `IdTarjeta` int(11) NOT NULL,
+  `Tarjeta` int(11) NOT NULL,
   PRIMARY KEY (`IdPago`),
-  KEY `IdTarjeta` (`IdTarjeta`),
   KEY `IdUsuario` (`IdUsuario`),
-  CONSTRAINT `FormaPago_ibfk_1` FOREIGN KEY (`IdTarjeta`) REFERENCES `Tarjeta` (`IdTarjeta`),
   CONSTRAINT `FormaPago_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -284,6 +285,7 @@ CREATE TABLE `FormaPago` (
 
 LOCK TABLES `FormaPago` WRITE;
 /*!40000 ALTER TABLE `FormaPago` DISABLE KEYS */;
+INSERT INTO `FormaPago` VALUES (1,2,3),(2,1,4),(3,4,1),(4,2,2);
 /*!40000 ALTER TABLE `FormaPago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +322,7 @@ DROP TABLE IF EXISTS `Login`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Login` (
   `IdLogin` int(11) NOT NULL,
-  `TiempoReproduccion` time NOT NULL,
+  `Tiempo` time NOT NULL,
   `IdCanciones` int(11) NOT NULL,
   `IdUsuario` int(11) NOT NULL,
   PRIMARY KEY (`IdLogin`),
@@ -337,6 +339,7 @@ CREATE TABLE `Login` (
 
 LOCK TABLES `Login` WRITE;
 /*!40000 ALTER TABLE `Login` DISABLE KEYS */;
+INSERT INTO `Login` VALUES (1,'02:35:37',3,5),(2,'04:12:00',4,5),(3,'08:53:49',5,2),(4,'10:34:30',3,5),(5,'03:15:22',4,4);
 /*!40000 ALTER TABLE `Login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,6 +370,7 @@ CREATE TABLE `Playlist` (
 
 LOCK TABLES `Playlist` WRITE;
 /*!40000 ALTER TABLE `Playlist` DISABLE KEYS */;
+INSERT INTO `Playlist` VALUES (1,'Raphael','2016-09-18',3,4),(2,'Hector','2018-07-14',5,2),(3,'Marny','2017-08-03',2,2),(4,'Halee','2019-04-12',3,1),(5,'Bryar','2019-06-22',4,4);
 /*!40000 ALTER TABLE `Playlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,6 +395,7 @@ CREATE TABLE `PlaylistEscuchadas` (
 
 LOCK TABLES `PlaylistEscuchadas` WRITE;
 /*!40000 ALTER TABLE `PlaylistEscuchadas` DISABLE KEYS */;
+INSERT INTO `PlaylistEscuchadas` VALUES (1,'Lois'),(2,'Tarik'),(3,'Erich'),(4,'Calista'),(5,'Karleigh');
 /*!40000 ALTER TABLE `PlaylistEscuchadas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,32 +421,6 @@ LOCK TABLES `Roles` WRITE;
 /*!40000 ALTER TABLE `Roles` DISABLE KEYS */;
 INSERT INTO `Roles` VALUES (1,'Administrador'),(2,'Básico'),(3,'Premium');
 /*!40000 ALTER TABLE `Roles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Tarjeta`
---
-
-DROP TABLE IF EXISTS `Tarjeta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Tarjeta` (
-  `IdTarjeta` int(11) NOT NULL,
-  `Numero` bigint(20) NOT NULL,
-  `FechaExpiracion` date NOT NULL,
-  `Cvc` smallint(6) NOT NULL,
-  PRIMARY KEY (`IdTarjeta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Tarjeta`
---
-
-LOCK TABLES `Tarjeta` WRITE;
-/*!40000 ALTER TABLE `Tarjeta` DISABLE KEYS */;
-INSERT INTO `Tarjeta` VALUES (1,4871682561513072,'2021-10-21',914),(2,4594747952419540,'2023-06-22',308),(3,2304237988443276,'2022-02-23',672);
-/*!40000 ALTER TABLE `Tarjeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -474,6 +453,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
+INSERT INTO `Usuario` VALUES (1,'2018-02-20','Fernando',483,'fer48@gmail.com','2017-05-25',2,2),(2,'2016-10-16','Toby',254,'Tb62695@hotmail.com','2018-05-23',1,2),(3,'2019-11-18','Peter',57,'peter.mjdfsig@pucese.edu.ec','2020-01-18',3,1),(4,'2017-09-30','Paula',492,'enim@gmail.com','2017-07-07',1,5),(5,'2020-06-02','Jenny',14,'ridjenny@hotmail.com','2017-02-15',2,3);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -486,4 +466,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-03  8:25:24
+-- Dump completed on 2020-06-04  7:11:21
