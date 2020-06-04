@@ -69,6 +69,21 @@ INSERT INTO `Artista` VALUES (1,'Ricardo Arjona','ric.arj@gmail.com','2021-04-22
 UNLOCK TABLES;
 
 --
+-- Temporary table structure for view `Artistas`
+--
+
+DROP TABLE IF EXISTS `Artistas`;
+/*!50001 DROP VIEW IF EXISTS `Artistas`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `Artistas` (
+  `Nombre` tinyint NOT NULL,
+  `Biografia` tinyint NOT NULL,
+  `CorreoElectronico` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `Canciones`
 --
 
@@ -180,6 +195,23 @@ LOCK TABLES `CancionesMasEscuchadas` WRITE;
 INSERT INTO `CancionesMasEscuchadas` VALUES (1,'Emerald',85,4,6,5,2,2),(2,'Imelda',81,5,7,3,5,5),(3,'Blair',76,5,3,1,4,3),(4,'Felix',89,3,3,5,1,4),(5,'Hamish',63,3,5,4,1,2);
 /*!40000 ALTER TABLE `CancionesMasEscuchadas` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `CancionesMasEscuchadas3`
+--
+
+DROP TABLE IF EXISTS `CancionesMasEscuchadas3`;
+/*!50001 DROP VIEW IF EXISTS `CancionesMasEscuchadas3`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `CancionesMasEscuchadas3` (
+  `Cancion` tinyint NOT NULL,
+  `Album` tinyint NOT NULL,
+  `Artista` tinyint NOT NULL,
+  `Cant. veces escuchado` tinyint NOT NULL,
+  `Cant. de usuarios` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `CancionesSugeridas`
@@ -312,6 +344,21 @@ LOCK TABLES `Genero` WRITE;
 INSERT INTO `Genero` VALUES (1,'Pop'),(2,'Afro'),(3,'Cristiana'),(4,'Clasica'),(5,'Rock'),(6,'K-pop'),(7,'Romantica'),(8,'Latina'),(9,'Reggae'),(10,'Cumbia');
 /*!40000 ALTER TABLE `Genero` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `IngresosDeUsuarios`
+--
+
+DROP TABLE IF EXISTS `IngresosDeUsuarios`;
+/*!50001 DROP VIEW IF EXISTS `IngresosDeUsuarios`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `IngresosDeUsuarios` (
+  `Nombre` tinyint NOT NULL,
+  `Fecha de ultimo ingreso` tinyint NOT NULL,
+  `Cantidad de ingresos` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `Login`
@@ -456,6 +503,63 @@ LOCK TABLES `Usuario` WRITE;
 INSERT INTO `Usuario` VALUES (1,'2018-02-20','Fernando',483,'fer48@gmail.com','2017-05-25',2,2),(2,'2016-10-16','Toby',254,'Tb62695@hotmail.com','2018-05-23',1,2),(3,'2019-11-18','Peter',57,'peter.mjdfsig@pucese.edu.ec','2020-01-18',3,1),(4,'2017-09-30','Paula',492,'enim@gmail.com','2017-07-07',1,5),(5,'2020-06-02','Jenny',14,'ridjenny@hotmail.com','2017-02-15',2,3);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `Artistas`
+--
+
+/*!50001 DROP TABLE IF EXISTS `Artistas`*/;
+/*!50001 DROP VIEW IF EXISTS `Artistas`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `Artistas` AS select `Artista`.`Nombre` AS `Nombre`,`Artista`.`Biografia` AS `Biografia`,`Artista`.`CorreoElectronico` AS `CorreoElectronico` from `Artista` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `CancionesMasEscuchadas3`
+--
+
+/*!50001 DROP TABLE IF EXISTS `CancionesMasEscuchadas3`*/;
+/*!50001 DROP VIEW IF EXISTS `CancionesMasEscuchadas3`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `CancionesMasEscuchadas3` AS select `Canciones`.`Nombre` AS `Cancion`,`Albumes`.`Nombre` AS `Album`,`Artista`.`Nombre` AS `Artista`,count(`CancionesEscuchadas`.`IdCancionesEscuchadas`) AS `Cant. veces escuchado`,count(`Usuario`.`IdUsuario`) AS `Cant. de usuarios` from (((((`Canciones` join `Albumes`) join `Artista`) join `CancionesEscuchadas`) join `Usuario`) join `Playlist`) where `Canciones`.`IdAlbumes` = `Albumes`.`IdAlbumes` and `Canciones`.`IdArtista` = `Artista`.`IdArtista` and `Canciones`.`IdCanciones` = `Playlist`.`IdCanciones` and `Playlist`.`IdUsuario` = `Usuario`.`IdUsuario` group by `Canciones`.`Nombre` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `IngresosDeUsuarios`
+--
+
+/*!50001 DROP TABLE IF EXISTS `IngresosDeUsuarios`*/;
+/*!50001 DROP VIEW IF EXISTS `IngresosDeUsuarios`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `IngresosDeUsuarios` AS select `Usuario`.`Nombre` AS `Nombre`,`Usuario`.`FechaUltimoIngreso` AS `Fecha de ultimo ingreso`,`Usuario`.`IngresosTotal` AS `Cantidad de ingresos` from `Usuario` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -466,4 +570,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-04  7:11:21
+-- Dump completed on 2020-06-04  8:23:50
